@@ -67,3 +67,31 @@ The above built successfully on Adroit:
 ```
 [root@adroit4 tmp]# singularity build dart.img dart.recipe
 ```
+
+## Serial Lammps
+
+```
+Bootstrap: library
+From: ubuntu:18.04
+
+%post
+  apt-get -y update
+  apt-get -y install build-essential cmake wget
+
+  wget https://github.com/lammps/lammps/archive/stable_29Oct2020.tar.gz
+  tar zxf stable_29Oct2020.tar.gz
+  cd lammps-stable_29Oct2020
+  mkdir build
+  cd build
+  cmake -D CMAKE_INSTALL_PREFIX=/opt \
+  -D BUILD_MPI=no -D BUILD_OMP=no -D CMAKE_BUILD_TYPE=Release \
+  -D CMAKE_CXX_FLAGS_RELEASE=-O3 -D PKG_MOLECULE=yes ../cmake
+  make -j 10
+  make install
+```
+
+To run the example:
+
+```
+$ singularity exec lammps.sif /opt/bin/lmp -in /lammps-stable_29Oct2020/examples/melt/in.melt
+```
