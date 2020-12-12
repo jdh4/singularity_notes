@@ -45,7 +45,7 @@ From: ubuntu:18.04
 ```
 
 The above is a workaround for `libstdc++.so.6: version 'CXXABI_1.3.8' not found` and `libstdc++.so.6: version
-'GLIBCXX_3.4.20' not found`.
+'GLIBCXX_3.4.20' not found`. See 31735.
 
 
 ## dart
