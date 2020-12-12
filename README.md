@@ -48,6 +48,7 @@ From: ubuntu:latest
 $ singularity exec tf2-cpu.sif /software/miniconda3/envs/tf2-cpu/bin/python3 -c "import tensorflow as tf; tf.keras.datasets.mnist.load_data()"
 $ git clone https://github.com/PrincetonUniversity/slurm_mnist
 $ singularity exec tf2-cpu.sif /software/miniconda3/envs/tf2-cpu/bin/python3 ./slurm_mnist/mnist_classify.py
+Test accuracy: 0.9732999801635742
 ```
 
 ## gmsh
