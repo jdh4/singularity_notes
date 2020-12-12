@@ -26,6 +26,28 @@ Create the image in the cloud:
 $ singularity build --remote myimage.sif centos_smcpp.def
 ```
 
+## gmsh
+
+Needed to build image then run ldd on binary then figure out which package provided the missing library.
+
+```
+Bootstrap: library
+From: ubuntu:18.04
+
+%post
+  apt-get -y update
+  apt-get -y install wget libglu1-mesa libxrender1 libxcursor-dev
+  apt-get -y install libxft2 lib32ncurses5 libxext6 libxinerama1
+
+  wget https://gmsh.info/bin/Linux/gmsh-4.7.1-Linux64.tgz
+  tar zxf gmsh-4.7.1-Linux64.tgz
+  rm -rf gmsh-4.7.1-Linux64.tgz
+```
+
+The above is a workaround for `libstdc++.so.6: version 'CXXABI_1.3.8' not found` and `libstdc++.so.6: version
+'GLIBCXX_3.4.20' not found`.
+
+
 ## dart
 
 ```
