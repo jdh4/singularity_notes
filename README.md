@@ -20,13 +20,6 @@ From: centos:latest
     /software/miniconda3/bin/conda create --name smcpp-env -c conda-forge -c terhorst smcpp -y
 ```
 
-```
-[root] # singularity build gmsh.sif gmsh.def
-[root] # chown jdh4 gmsh.sif; chgrp cses gmsh.sif
-[jdh4] $ singularity shell gmsh.sif
-[jdh4] $ /gmsh-4.7.1-Linux64/bin/gmsh -help
-```
-
 Create the image in the cloud:
 
 ```
@@ -49,6 +42,13 @@ From: ubuntu:18.04
   wget https://gmsh.info/bin/Linux/gmsh-4.7.1-Linux64.tgz
   tar zxf gmsh-4.7.1-Linux64.tgz
   rm -rf gmsh-4.7.1-Linux64.tgz
+```
+
+```
+[root] # singularity build gmsh.sif gmsh.def
+[root] # chown jdh4 gmsh.sif; chgrp cses gmsh.sif
+[jdh4] $ singularity shell gmsh.sif
+[jdh4] $ /gmsh-4.7.1-Linux64/bin/gmsh -help
 ```
 
 The above is a workaround for `libstdc++.so.6: version 'CXXABI_1.3.8' not found` and `libstdc++.so.6: version
