@@ -20,6 +20,13 @@ From: centos:latest
     /software/miniconda3/bin/conda create --name smcpp-env -c conda-forge -c terhorst smcpp -y
 ```
 
+```
+[root] # singularity build gmsh.sif gmsh.def
+[root] # chown jdh4 gmsh.sif; chgrp cses gmsh.sif
+[jdh4] $ singularity shell gmsh.sif
+[jdh4] $ /gmsh-4.7.1-Linux64/bin/gmsh -help
+```
+
 Create the image in the cloud:
 
 ```
