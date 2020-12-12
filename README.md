@@ -26,6 +26,30 @@ Create the image in the cloud:
 $ singularity build --remote myimage.sif centos_smcpp.def
 ```
 
+## TensorFlow CPU on notexa
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+    apt-get -y update
+    apt-get -y install wget
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    chmod 755 Miniconda3-latest-Linux-x86_64.sh
+    mkdir -p /software
+    ./Miniconda3-latest-Linux-x86_64.sh -b -f -p /software/miniconda3
+    . /software/miniconda3/etc/profile.d/conda.sh
+    /software/miniconda3/bin/conda init bash
+    /software/miniconda3/bin/conda create --name tf2-cpu tensorflow -y
+```
+
+```
+$ singularity exec tf2-cpu.sif /software/miniconda3/envs/tf2-cpu/bin/python3 -c "import tensorflow as tf; tf.keras.datasets.mnist.load_data()"
+$ git clone https://github.com/PrincetonUniversity/slurm_mnist
+$ singularity exec tf2-cpu.sif /software/miniconda3/envs/tf2-cpu/bin/python3 ./slurm_mnist/mnist_classify.py
+```
+
 ## gmsh
 
 Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
