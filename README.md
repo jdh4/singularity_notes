@@ -28,7 +28,7 @@ $ singularity build --remote myimage.sif centos_smcpp.def
 
 ## gmsh
 
-Needed to build image then run ldd on binary then figure out which package provided the missing library.
+Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
 
 ```
 Bootstrap: library
