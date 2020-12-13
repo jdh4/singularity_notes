@@ -78,7 +78,7 @@ From: ubuntu:latest
     Rscript --slave "main.R"
 ```
 
-The above produced a container with R 3.6. Looks like need to add a repo to get 4.0. The container was made on notexa and it worked on mbp2018.
+The above produced a container with R 3.6. Looks like need to add a repo to get 4.0. The container was made on notexa and it worked on mbp2019.
 
 ## gmsh
 
