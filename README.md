@@ -58,7 +58,8 @@ Bootstrap: docker
 From: ubuntu:latest
 
 %files
-    /home/jdh4/software/singularity/R/r.def /opt
+    r.def /opt
+    main.R
 
 %post
     apt-get -y update
