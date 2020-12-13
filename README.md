@@ -51,6 +51,20 @@ $ singularity exec tf2-cpu.sif /software/miniconda3/envs/tf2-cpu/bin/python3 ./s
 Test accuracy: 0.9732999801635742
 ```
 
+## R
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+    apt-get -y update
+    DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential r-base
+    R --slave -e 'install.packages(c("dplyr", "caret"))'
+```
+
+The above produced a container with R 3.6. Looks like need to add a repo to get 4.0.
+
 ## gmsh
 
 Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
