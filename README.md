@@ -57,13 +57,27 @@ Test accuracy: 0.9732999801635742
 Bootstrap: docker
 From: ubuntu:latest
 
+%files
+    /home/jdh4/software/singularity/R/r.def /opt
+
 %post
     apt-get -y update
     DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential r-base
+    apt-get -y install locales
+    apt-get clean
+    locale-gen en_US.UTF-8
     R --slave -e 'install.packages(c("dplyr", "caret"))'
+
+%test
+    #!/bin/bash
+    exec R --slave -e "library(caret); installed.packages();"
+
+%runscript
+    #!/bin/bash
+    Rscript --slave "main.R"
 ```
 
-The above produced a container with R 3.6. Looks like need to add a repo to get 4.0.
+The above produced a container with R 3.6. Looks like need to add a repo to get 4.0. The container was made on notexa and it worked on mbp2018.
 
 ## gmsh
 
