@@ -80,6 +80,37 @@ From: ubuntu:latest
 
 The above produced a container with R 3.6. Looks like need to add a repo to get 4.0. The container was made on notexa and it worked on mbp2019.
 
+## RStudio
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+    apt-get -y update
+    DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential wget vim nano git python python-dev bzip2 r-base
+    apt-get -y install locales libcurl4-openssl-dev libv8-dev libgeos-dev libgdal-dev libproj-dev
+    apt-get -y install protobuf-compiler libudunits2-dev libprotobuf-dev libjq-dev libfontconfig1-dev libcairo2-dev
+    apt-get -y install xvfb xauth xorg-dev libx11-dev libglu1-mesa-dev xfonts-base
+
+    #wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.3.1093-amd64.deb
+    #gdebi -n rstudio-server-1.3.1093-amd64.deb
+
+    apt-get -y install gdebi-core
+    wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
+    gdebi -n rstudio-1.3.1093-amd64.deb
+
+    apt-get clean
+    locale-gen en_US.UTF-8
+```
+
+```
+$ singularity shell myimage.sif 
+Singularity> rstudio
+QStandardPaths: XDG_RUNTIME_DIR points to non-existing path '/run/user/150340', please create it with 0700 permissions.
+qt.qpa.xcb: QXcbConnection: XCB error: 3 (BadWindow), sequence: 1347, resource id: 12916261, major code: 40 (TranslateCoords), minor code: 0
+```
+
 ## gmsh
 
 Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
