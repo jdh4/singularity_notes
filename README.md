@@ -1,5 +1,11 @@
 # Singularity Notes
 
+## Examples
+
+[https://github.com/mkandes/naked-singularity/tree/master/definition-files](https://github.com/mkandes/naked-singularity/tree/master/definition-files)
+[https://www.rocker-project.org](https://www.rocker-project.org)
+[https://github.com/sylabs/examples](https://github.com/sylabs/examples)
+
 ## smcpp
 
 Create a Conda environment:
@@ -18,6 +24,24 @@ From: centos:latest
     source /software/miniconda3/etc/profile.d/conda.sh
     /software/miniconda3/bin/conda init bash
     /software/miniconda3/bin/conda create --name smcpp-env -c conda-forge -c terhorst smcpp -y
+```
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+    export PATH="/opt/miniconda3/bin:${PATH}"
+
+%post
+    apt-get -y update && apt-get -y upgrade
+    apt-get -y install wget
+    #wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh
+    chmod 755 Miniconda3-py37_4.9.2-Linux-x86_64.sh
+    mkdir -p /opt/miniconda3
+    ./Miniconda3-py37_4.9.2-Linux-x86_64.sh -b -f -p /opt/miniconda3
+    /opt/miniconda3/bin/conda install -c conda-forge -c terhorst -y smcpp
 ```
 
 Create the image in the cloud:
