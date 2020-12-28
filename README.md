@@ -2,9 +2,9 @@
 
 ## Examples
 
-[https://github.com/mkandes/naked-singularity/tree/master/definition-files](https://github.com/mkandes/naked-singularity/tree/master/definition-files)
-[https://www.rocker-project.org](https://www.rocker-project.org)
-[https://github.com/sylabs/examples](https://github.com/sylabs/examples)
+[https://github.com/mkandes/naked-singularity/tree/master/definition-files](https://github.com/mkandes/naked-singularity/tree/master/definition-files)  
+[https://www.rocker-project.org](https://www.rocker-project.org)  
+[https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 
 ## smcpp
 
