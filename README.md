@@ -7,6 +7,34 @@
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
+## eog
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+    # Set system locale
+    export LC_ALL=C
+    export XDG_RUNTIME_DIR=/tmp
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get -y update && apt-get -y upgrade
+    apt-get -y install eog xorg gnuplot binutils
+    strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+    mkdir -p /run/user/1000/dconf
+    chmod -R 777 /run
+```
+
+In the above, I don't have `XDG_RUNTIME_DIR` and `/run/user/1000/` worked out perfectly. Could try using `--bind /tmp:/run/user/1000`
+
+If do nothing with `XDG_RUNTIME_DIR` and `/run/user/1000/` then get this error when launching eog:
+
+```
+(eog:23952): dconf-CRITICAL **: 10:29:33.980: unable to create directory '/run/user/1000/dconf': Read-only file system.  dconf will not work properly.
+```
+
 ## smcpp
 
 Create a Conda environment:
