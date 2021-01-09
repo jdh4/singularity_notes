@@ -169,18 +169,48 @@ qt.qpa.xcb: QXcbConnection: XCB error: 3 (BadWindow), sequence: 1347, resource i
 Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
 
 ```
-Bootstrap: library
-From: ubuntu:18.04
+Bootstrap: docker
+From: ubuntu:20.10
 
 %post
-  apt-get -y update
-  apt-get -y install wget libglu1-mesa libxrender1 libxcursor-dev
-  apt-get -y install libxft2 lib32ncurses5 libxext6 libxinerama1
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y update && apt-get -y upgrade
+  apt-get -y install libfreetype-dev
+  apt-get -y install libocct-foundation-dev libocct-data-exchange-dev
+  #apt-get -y install libfltk1.3-dev
+  apt-get -y install libjpeg-dev
+  apt-get -y install xorg
+  apt-get -y install libhdf5-dev
+  apt-get -y install libgmp-dev
+  apt-get -y install build-essential cmake
+  apt-get -y install git wget
 
-  wget https://gmsh.info/bin/Linux/gmsh-4.7.1-Linux64.tgz
-  tar zxf gmsh-4.7.1-Linux64.tgz
-  rm -rf gmsh-4.7.1-Linux64.tgz
+  wget https://www.fltk.org/pub/fltk/1.3.4/fltk-1.3.4-2-source.tar.gz
+  tar zxf fltk-1.3.4-2-source.tar.gz
+  cd fltk-1.3.4-2
+  ./configure
+  make -j 4
+  make install
+ 
+  #apt-get -y install wget libglu1-mesa libxrender1 libxcursor-dev
+  #apt-get -y install libxft2 lib32ncurses5 libxext6 libxinerama1
+
+  git clone http://gitlab.onelab.info/gmsh/gmsh.git
+  cd gmsh
+  mkdir build && cd build
+  cmake .. -DCMAKE_INSTALL_PREFIX=/opt
+  make -j 4
+  make install
 ```
+
+To launch the GUI:
+
+```
+$ singularity exec gmsh /opt/bin/gmsh
+```
+
+
+Old stuff below:
 
 ```
 [root] # singularity build gmsh.sif gmsh.def
