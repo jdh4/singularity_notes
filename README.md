@@ -7,6 +7,34 @@
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
+
+## sft
+
+```
+Bootstrap: docker
+From: ubuntu:20.04
+
+%environment
+    # Set system locale
+    export LC_ALL=C
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get -y update && apt-get -y upgrade
+    apt-get install -y curl
+    apt-get install -y software-properties-common
+    
+    echo "deb http://pkg.scaleft.com/deb linux main" | tee -a /etc/apt/sources.list
+    curl -C - https://dist.scaleft.com/pki/scaleft_deb_key.asc | apt-key add -
+    apt-get -y update
+    apt-get install -y scaleft-client-tools
+```
+
+```
+$ singularity remote login SylabsCloud
+$ singularity build --remote sft.sif recipe.def
+```
+
 ## eog
 
 ```
