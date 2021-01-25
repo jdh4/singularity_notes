@@ -98,6 +98,7 @@ From: ubuntu:20.04
     apt-get -y update && apt-get -y upgrade
     apt-get install -y curl
     apt-get install -y software-properties-common
+    apt-get install -y openssh-server
     
     echo "deb http://pkg.scaleft.com/deb linux main" | tee -a /etc/apt/sources.list
     curl -C - https://dist.scaleft.com/pki/scaleft_deb_key.asc | apt-key add -
