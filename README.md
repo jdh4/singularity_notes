@@ -8,6 +8,81 @@
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
 
+## afni
+
+```
+Bootstrap: docker
+From: ubuntu:20.04
+
+%environment
+  # Set system locale
+  export LC_ALL=C
+  export PATH=$PATH:/root/abin
+
+%post -c /bin/bash
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y update && apt-get -y upgrade
+  apt-get install -y software-properties-common
+  add-apt-repository universe
+
+  apt-get install -y tcsh xfonts-base libssl-dev  \
+		python-is-python3                 \
+		python3-matplotlib                \
+		libgsl-dev \
+                netpbm gnome-tweak-tool   \
+		libjpeg62 xvfb xterm vim curl     \
+		gedit evince eog                  \
+		libglu1-mesa-dev libglw1-mesa     \
+		libxm4 build-essential            \
+		libcurl4-openssl-dev libxml2-dev  \
+		libgfortran-8-dev libgomp1        \
+		gnome-terminal nautilus           \
+		gnome-icon-theme-symbolic         \
+		firefox xfonts-100dpi             \
+                libv8-dev libudunits2-dev \
+		r-base-dev
+
+  ln -s /usr/lib/x86_64-linux-gnu/libgsl.so.23 /usr/lib/x86_64-linux-gnu/libgsl.so.19
+
+  echo $0
+
+  cd $HOME
+  curl -O https://afni.nimh.nih.gov/pub/dist/bin/misc/@update.afni.binaries
+  tcsh @update.afni.binaries -package linux_ubuntu_16_64 -do_extras
+
+  cp $HOME/abin/AFNI.afnirc $HOME/.afnirc
+  export PATH=$PATH:/root/abin
+
+  echo $0
+
+  chmod -R 775 /root
+  suma -update_env
+
+  echo 'setenv PATH $PATH\:/root/abin' >> /root/.cshrc
+  echo 'export PATH=$PATH:/root/abin'  >> /root/.bashrc
+  cat /root/.bashrc
+
+  export R_LIBS=$HOME/R
+  mkdir  $R_LIBS
+  echo  'setenv R_LIBS ~/R'     >> ~/.cshrc
+  echo  'export R_LIBS=$HOME/R' >> ~/.bashrc
+
+  #rPkgsInstall -pkgs ALL
+
+  #python afni_system_check.py -check_all
+
+  echo 'set filec'    >> ~/.cshrc
+  echo 'set autolist' >> ~/.cshrc
+  echo 'set nobeep'   >> ~/.cshrc
+
+  echo 'alias ls ls --color=auto' >> ~/.cshrc
+  echo 'alias ll ls --color -l'   >> ~/.cshrc
+  echo 'alias ltr ls --color -ltr'   >> ~/.cshrc
+  echo 'alias ls="ls --color"'    >> ~/.bashrc
+  echo 'alias ll="ls --color -l"' >> ~/.bashrc
+  echo 'alias ltr="ls --color -ltr"' >> ~/.bashrc
+```
+
 ## sft
 
 ```
