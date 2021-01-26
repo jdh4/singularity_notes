@@ -8,6 +8,26 @@
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
 
+## HW
+
+```
+Bootstrap: docker
+From: ubuntu:18.04
+
+%environment
+    export MY_VAR='---This is my var.---'
+
+%post
+    apt-get -qq -y update
+    apt-get -qq -y install python > /dev/null
+
+%files
+    env_print.py    /
+
+%runscript
+    python /env_print.py
+```
+
 ## afni
 
 ```
