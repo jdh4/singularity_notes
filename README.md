@@ -8,6 +8,31 @@
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
 
+## anaconda3
+
+How to source .bashrc without it finding host version?
+
+```
+Bootstrap: docker
+From: ubuntu:20.04
+
+%environment
+  PATH=$PATH:/opt/anaconda3/bin
+  export PATH
+
+%post
+  apt-get -y update && apt-get -y upgrade
+  apt-get -y install git bzip2 wget
+ 
+  wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
+  bash Anaconda3-2020.11-Linux-x86_64.sh -b -p /opt/anaconda3
+  echo "PATH=/opt/anaconda3/bin:\$PATH" >> $HOME/.bashrc
+  echo "export PATH" >> $HOME/.bashrc
+  rm Anaconda3-2020.11-Linux-x86_64.sh 
+  #. $HOME/.bashrc
+  /opt/anaconda3/bin/conda install --channel gurobi gurobi -y
+```
+
 ## HW
 
 ```
