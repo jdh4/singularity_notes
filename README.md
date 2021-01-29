@@ -7,6 +7,16 @@
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 
+## GPU kernel
+
+```
+$ singularity pull docker://nvidia/cuda:11.1.1-devel-ubuntu20.04
+$ singularity shell --nv ~/software/cuda_11.1.1-devel-ubuntu20.04.sif
+Singularity> nvcc hello_world_gpu.cu
+Singularity> ./a.out 
+Hello world from the CPU.
+Hello world from the GPU.
+```
 
 ## anaconda3
 
