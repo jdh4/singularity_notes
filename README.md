@@ -38,9 +38,12 @@ From: ubuntu:20.04
   bash Anaconda3-2020.11-Linux-x86_64.sh -b -p /opt/anaconda3
   echo "PATH=/opt/anaconda3/bin:\$PATH" >> $HOME/.bashrc
   echo "export PATH" >> $HOME/.bashrc
-  rm Anaconda3-2020.11-Linux-x86_64.sh 
-  #. $HOME/.bashrc
+  rm Anaconda3-2020.11-Linux-x86_64.sh
   /opt/anaconda3/bin/conda install --channel gurobi gurobi -y
+  
+  # cleanup
+  apt-get -y autoremove --purge
+  apt-get -y clean
 ```
 
 ## HW
