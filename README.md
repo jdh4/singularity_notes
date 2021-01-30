@@ -6,6 +6,7 @@
 [https://www.rocker-project.org](https://www.rocker-project.org)  
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
+QUAY.io, BioContainers
 
 ## GPU kernel
 
