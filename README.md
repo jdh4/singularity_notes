@@ -269,6 +269,8 @@ Test accuracy: 0.9732999801635742
 
 ## R
 
+[https://hub.docker.com/r/rocker/r-ubuntu](https://hub.docker.com/r/rocker/r-ubuntu)
+
 ```
 Bootstrap: docker
 From: ubuntu:latest
