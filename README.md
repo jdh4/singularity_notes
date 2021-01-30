@@ -269,6 +269,26 @@ Test accuracy: 0.9732999801635742
 
 ## R
 
+```
+Bootstrap: docker
+From: r-base:4.0.2
+
+%post
+  R --slave -e 'install.packages(c("caret"))'
+
+%runscript
+  #!/bin/bash
+  Rscript --slave -e "library(caret); installed.packages();"
+```
+
+You can install packages locally and then specify where they are when used later:
+
+```
+> library(libridate)
+Error in library(libridate) : there is no package called ‘libridate’
+> library("lubridate", lib.loc="~/R/x86_64-pc-linux-gnu-library/4.0")
+```
+
 [https://hub.docker.com/r/rocker/r-ubuntu](https://hub.docker.com/r/rocker/r-ubuntu)
 
 ```
