@@ -75,7 +75,7 @@ From: ubuntu:20.04
 
 %environment
   # Set system locale
-  export LC_ALL=C
+  export LC_ALL='C'
   export PATH=$PATH:/root/abin
 
 %post -c /bin/bash
@@ -150,7 +150,7 @@ From: ubuntu:20.04
 
 %environment
     # Set system locale
-    export LC_ALL=C
+    export LC_ALL='C'
 
 %post
     export DEBIAN_FRONTEND=noninteractive
@@ -178,7 +178,7 @@ From: ubuntu:latest
 
 %environment
     # Set system locale
-    export LC_ALL=C
+    export LC_ALL='C'
     export XDG_RUNTIME_DIR=/tmp
 
 %post
