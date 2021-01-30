@@ -289,6 +289,16 @@ Error in library(libridate) : there is no package called ‘libridate’
 > library("lubridate", lib.loc="~/R/x86_64-pc-linux-gnu-library/4.0")
 ```
 
+```
+$ singularity exec myimage.sif cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux bullseye/sid"
+NAME="Debian GNU/Linux"
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+```
+
 [https://hub.docker.com/r/rocker/r-ubuntu](https://hub.docker.com/r/rocker/r-ubuntu)
 
 ```
