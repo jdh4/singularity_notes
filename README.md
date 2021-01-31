@@ -25,6 +25,8 @@ Singularity> . /myaliases.sh
 Singularity> ll
 ```
 
+Or source .bashrc file upon entry or do `-s /bin/bash`.
+
 ## GPU kernel
 
 ```
