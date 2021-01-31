@@ -24,9 +24,11 @@ From: ubuntu:20.04
   alias ll='ls -l'
 ```
 
+```
 $ singularity shell myalias.sif
 Singularity> . /profiles
 Singularity> ll
+```
 
 ## GPU kernel
 
