@@ -15,18 +15,13 @@ Bootstrap: docker
 From: ubuntu:20.04
 
 %post
-  echo 'alias ll="ls -l"' > ${SINGULARITY_ROOTFS}/profiles
-  echo ${SINGULARITY_ROOTFS}
-
-%environment
-  PATH=$PATH:/opt/anaconda3/bin
-  export PATH
-  alias ll='ls -l'
+  echo '#!/bin/bash' > myaliases.sh
+  echo 'alias ll="ls -l"' >> myaliases.sh
 ```
 
 ```
 $ singularity shell myalias.sif
-Singularity> . /profiles
+Singularity> . /myaliases.sh 
 Singularity> ll
 ```
 
