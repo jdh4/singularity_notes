@@ -31,6 +31,7 @@ Or source .bashrc file upon entry or do `-s /bin/bash`.
 
 ```
 $ singularity pull docker://nvidia/cuda:11.1.1-devel-ubuntu20.04
+$ gpu5
 $ singularity shell --nv ~/software/cuda_11.1.1-devel-ubuntu20.04.sif
 Singularity> nvcc hello_world_gpu.cu
 Singularity> ./a.out 
