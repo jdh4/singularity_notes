@@ -8,6 +8,26 @@
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
 QUAY.io, BioContainers
 
+## alias
+
+```
+Bootstrap: docker
+From: ubuntu:20.04
+
+%post
+  echo 'alias ll="ls -l"' > ${SINGULARITY_ROOTFS}/profiles
+  echo ${SINGULARITY_ROOTFS}
+
+%environment
+  PATH=$PATH:/opt/anaconda3/bin
+  export PATH
+  alias ll='ls -l'
+```
+
+$ singularity shell myalias.sif
+Singularity> . /profiles
+Singularity> ll
+
 ## GPU kernel
 
 ```
