@@ -510,3 +510,75 @@ To run the example:
 ```
 $ singularity exec lammps.sif /opt/bin/lmp -in /lammps-stable_29Oct2020/examples/melt/in.melt
 ```
+
+## Parallel Lammps
+
+Below is specifically for Stellar:
+
+```
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+  in.melt /opt/lammps/in.melt
+
+%environment
+  export OMPI_DIR=/opt/ompi
+  export SINGULARITY_OMPI_DIR=$OMPI_DIR
+  export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
+  export SINGULARITYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
+  export LC_ALL='C'
+
+%post
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y update && apt-get -y upgrade
+  apt-get -y install python3-dev build-essential cmake wget git
+
+  # build MPI library
+  echo "Installing Open MPI"
+  export OMPI_DIR=/opt/ompi
+  export OMPI_VERSION=4.1.0
+  export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OMPI_VERSION.tar.bz2"
+  mkdir -p /mytmp/ompi
+  mkdir -p /opt
+  # Download
+  cd /mytmp/ompi && wget -O openmpi-$OMPI_VERSION.tar.bz2 $OMPI_URL && tar -xjf openmpi-$OMPI_VERSION.tar.bz2
+  # Compile and install
+  cd /mytmp/ompi/openmpi-$OMPI_VERSION && ./configure --prefix=$OMPI_DIR && make install
+  # Set env variables so we can compile our application
+  export PATH=$OMPI_DIR/bin:$PATH
+  export LD_LIBRARY_PATH=$OMPI_DIR/lib:$LD_LIBRARY_PATH
+  export MANPATH=$OMPI_DIR/share/man:$MANPATH
+
+  # build LAMMPS
+  mkdir -p /mytmp/lammps
+  cd /mytmp/lammps
+  wget https://github.com/lammps/lammps/archive/stable_29Oct2020.tar.gz
+  tar zxf stable_29Oct2020.tar.gz
+  cd lammps-stable_29Oct2020
+  mkdir build && cd build
+
+  cmake -D CMAKE_INSTALL_PREFIX=/opt/lammps -D ENABLE_TESTING=yes \
+  -D CMAKE_CXX_COMPILER=g++ -D MPI_CXX_COMPILER=mpicxx \
+  -D BUILD_MPI=yes -D BUILD_OMP=yes \
+  -D CMAKE_BUILD_TYPE=Release \
+  -D CMAKE_CXX_FLAGS_RELEASE="-Ofast -DNDEBUG" \
+  -D PKG_USER-OMP=yes -D PKG_MOLECULE=yes ../cmake
+
+  make -j 4
+  make install
+
+  # cleanup
+  apt-get -y autoremove --purge
+  apt-get -y clean
+  rm -rf /mytmp
+
+%runscript
+  /opt/lammps/bin/lmp -in /opt/lammps/in.melt
+```
+
+Be sure to have in.melt in the same directory as the definition file.
+
+```
+$ ./lammps_mpi.sif
+```
