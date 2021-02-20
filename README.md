@@ -3,7 +3,7 @@
 ## Examples
 
 [https://github.com/mkandes/naked-singularity/tree/master/definition-files](https://github.com/mkandes/naked-singularity/tree/master/definition-files)  
-[https://www.youtube.com/watch?v=vEjLuX0ClN0](Webinar by Marty Kandes of SDSC)  
+[Webinar by Marty Kandes of SDSC](https://www.youtube.com/watch?v=vEjLuX0ClN0)  
 [https://www.rocker-project.org](https://www.rocker-project.org)  
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
