@@ -7,7 +7,9 @@
 [https://www.rocker-project.org](https://www.rocker-project.org)  
 [https://github.com/sylabs/examples](https://github.com/sylabs/examples)  
 [https://github.com/NIH-HPC/Singularity-Tutorial](https://github.com/NIH-HPC/Singularity-Tutorial)  
-QUAY.io, BioContainers
+QUAY.io, BioContainers  
+[Ubuntu Packages Search](https://packages.ubuntu.com/)  
+[NVIDIA GPU Cloud](https://ngc.nvidia.com/catalog/containers)
 
 ## alias
 
