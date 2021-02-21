@@ -521,12 +521,16 @@ From: ubuntu:20.04
 
 %files
   in.melt /opt/lammps/in.melt
+  mpitest.c /opt
 
 %environment
   export OMPI_DIR=/opt/ompi
-  export SINGULARITY_OMPI_DIR=$OMPI_DIR
-  export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
-  export SINGULARITYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
+  export PATH="$OMPI_DIR/bin:$PATH"
+  export LD_LIBRARY_PATH="$OMPI_DIR/lib:$LD_LIBRARY_PATH"
+  export MANPATH="$OMPI_DIR/share/man:$MANPATH"
+  #export SINGULARITY_OMPI_DIR=$OMPI_DIR
+  #export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
+  #export SINGULARITYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
   export LC_ALL='C'
 
 %post
@@ -537,8 +541,8 @@ From: ubuntu:20.04
   # build MPI library
   echo "Installing Open MPI"
   export OMPI_DIR=/opt/ompi
-  export OMPI_VERSION=4.1.0
-  export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-$OMPI_VERSION.tar.bz2"
+  export OMPI_VERSION=4.0.5
+  export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2"
   mkdir -p /mytmp/ompi
   mkdir -p /opt
   # Download
@@ -549,6 +553,9 @@ From: ubuntu:20.04
   export PATH=$OMPI_DIR/bin:$PATH
   export LD_LIBRARY_PATH=$OMPI_DIR/lib:$LD_LIBRARY_PATH
   export MANPATH=$OMPI_DIR/share/man:$MANPATH
+
+  echo "Compiling the MPI application..."
+  cd /opt && mpicc -o mpitest mpitest.c
 
   # build LAMMPS
   mkdir -p /mytmp/lammps
