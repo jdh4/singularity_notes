@@ -382,6 +382,40 @@ QStandardPaths: XDG_RUNTIME_DIR points to non-existing path '/run/user/150340', 
 qt.qpa.xcb: QXcbConnection: XCB error: 3 (BadWindow), sequence: 1347, resource id: 12916261, major code: 40 (TranslateCoords), minor code: 0
 ```
 
+## Kira
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+    export LC_ALL='C'
+    export XDG_RUNTIME_DIR=/tmp
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    export LC_ALL='C'
+    apt-get -y update && apt-get -y upgrade
+    apt-get -y install build-essential wget vim nano git python python-dev bzip2 r-base
+    apt-get -y install locales libcurl4-openssl-dev libv8-dev libgeos-dev libgdal-dev libproj-dev
+    apt-get -y install protobuf-compiler libudunits2-dev libprotobuf-dev libjq-dev libfontconfig1-dev libcairo2-dev
+    apt-get -y install xvfb xauth xorg-dev libx11-dev libglu1-mesa-dev xfonts-base
+
+    apt-get -y install gdebi-core
+    wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
+    gdebi -n rstudio-1.3.1093-amd64.deb
+
+    apt-get -y autoremove --purge
+    apt-get -y clean
+    locale-gen en_US.UTF-8
+
+    R --slave -e 'install.packages(c("rslurm", "V8", "rgdal", "rmapshaper", "areal", "dplyr", "geosphere", "leaflet", "lwgeom", "mapview", "nngeo", "purrr", "rlang", "sf"))'
+
+%runscript
+    #!/bin/bash
+    Rscript --slave "main.R"
+```
+
 ## gmsh
 
 Needed to build image then run ldd on binary then figure out which package provided the missing libraries.
