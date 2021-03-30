@@ -30,6 +30,22 @@ Singularity> ll
 
 Or source .bashrc file upon entry or do `-s /bin/bash`.
 
+## PyTorch with Open3D
+
+The NVIDIA PyTorch image uses Ubunut 20.04.
+
+```
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:21.03-py3
+
+%post -c /bin/bash
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y update 
+  apt-get -y install xorg-dev libglu1-mesa-dev libsdl2-dev libc++-7-dev libc++abi-7-dev libxi-dev libtbb-dev libosmesa6-dev libudev-dev
+  /opt/conda/bin/conda install -c open3d-admin open3d -y
+  /opt/conda/bin/conda install -c conda-forge addict plyfile -y
+```
+
 ## GPU kernel
 
 ```
