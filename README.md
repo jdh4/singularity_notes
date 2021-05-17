@@ -207,6 +207,7 @@ From: ubuntu:20.04
 ```
 $ singularity remote login SylabsCloud
 $ singularity build --remote sft.sif recipe.def
+$ singularity exec sft.sif sft ssh -L 9090:localhost:9090 raplab-hackathon
 ```
 
 ## eog
