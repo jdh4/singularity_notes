@@ -662,7 +662,7 @@ RUN mkdir -p /opt/SLM-Lab
 WORKDIR /opt/SLM-Lab
 
 RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -b -f -p /opt/miniconda3&& \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -f -p /opt/miniconda3 && \
     rm Miniconda3-latest-Linux-x86_64.sh && \
     echo '. /opt/miniconda3/etc/profile.d/conda.sh' >> ~/.bashrc && \
     . /opt/miniconda3/etc/profile.d/conda.sh && \
