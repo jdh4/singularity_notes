@@ -690,3 +690,29 @@ RUN . /opt/miniconda3/etc/profile.d/conda.sh && \
 
 CMD ["/bin/bash"]
 ```
+
+## xcrysden
+
+```
+Bootstrap: docker
+From: ubuntu:18.04
+
+%environment
+  PATH=$PATH:/opt/xcrysden-1.6.2-bin-shared
+  export PATH
+
+%post
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y update && apt-get -y upgrade
+  apt-get -y install tk libglu1-mesa libtogl2 libfftw3-3 libxmu6 imagemagick openbabel libgfortran5
+  apt-get -y install wget
+  apt-get -y update
+
+  mkdir -p /opt && cd /opt
+  wget http://www.xcrysden.org/download/xcrysden-1.6.2-linux_x86_64-shared.tar.gz
+  tar zxvf xcrysden-1.6.2-linux_x86_64-shared.tar.gz
+  rm -rf xcrysden-1.6.2-linux_x86_64-shared.tar.gz
+
+%runscript
+  xcrysden
+  ```
