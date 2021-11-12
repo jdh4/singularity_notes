@@ -180,6 +180,62 @@ From: ubuntu:20.04
   echo 'alias ll="ls --color -l"' >> ~/.bashrc
   echo 'alias ltr="ls --color -ltr"' >> ~/.bashrc
 ```
+## DSSP
+
+DSSP on [GitHub](https://github.com/PDB-REDO/dssp).
+
+```
+Bootstrap: docker
+From: ubuntu:latest
+
+%environment
+    # Set system locale
+    export LC_ALL='C'
+    PATH=$PATH:/opt/bin
+    export PATH
+
+%post -c /bin/bash
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get -y update && apt-get -y upgrade
+    apt-get -y install cmake libboost-all-dev build-essential cmake git libbz2-dev
+
+    mkdir -p /opt
+    mkdir -p /mytmp
+
+    cd /mytmp
+    git clone https://github.com/mhekkel/mrc.git
+    cd mrc
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/opt ..
+    cmake --build .
+    cmake --install .
+
+    cd /mytmp
+    git clone https://github.com/PDB-REDO/libcifpp.git
+    cd libcifpp
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/opt ..
+    cmake --build . --config Release
+    ctest -C Release
+    cmake --install .
+
+    cd /mytmp
+    git clone https://github.com/PDB-REDO/dssp.git
+    cd dssp
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/opt ..
+    cmake --build . --config Release
+    ctest -C Release
+    cmake --install .
+
+    # cleanup
+    rm -rf /mytmp
+    apt-get -y autoremove --purge
+    apt-get -y clean
+```
 
 ## sft
 
