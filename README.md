@@ -11,6 +11,36 @@ QUAY.io, BioContainers
 [Ubuntu Packages Search](https://packages.ubuntu.com/)  
 [NVIDIA GPU Cloud](https://ngc.nvidia.com/catalog/containers)
 
+## JAX
+
+```
+Bootstrap: localimage
+From: cuda_11.7.1-devel-ubuntu20.04.sif
+
+%environment
+  PATH=$PATH:/software/miniconda3/bin
+  export PATH
+
+%post -c /bin/bash
+  apt-get -y update && apt-get -y upgrade
+  apt-get -y install git bzip2 wget
+
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  chmod 755 Miniconda3-latest-Linux-x86_64.sh
+  mkdir -p /software
+  ./Miniconda3-latest-Linux-x86_64.sh -b -f -p /software/miniconda3
+  source /software/miniconda3/etc/profile.d/conda.sh
+  /software/miniconda3/bin/conda init bash
+  echo "PATH=/software/miniconda3/bin:\$PATH" >> $HOME/.bashrc
+  echo "export PATH" >> $HOME/.bashrc
+  export CONDA_OVERRIDE_CUDA="11.2"
+  /software/miniconda3/bin/conda install jax cuda-nvcc "jaxlib==0.3.10=cuda112*" -c conda-forge -c nvidia
+
+  # cleanup
+  apt-get -y autoremove --purge
+  apt-get -y clean
+```
+
 ## alias
 
 ```
