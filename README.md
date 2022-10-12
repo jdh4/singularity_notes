@@ -16,6 +16,7 @@ QUAY.io, BioContainers
 ```
 Bootstrap: localimage
 From: cuda_11.7.1-devel-ubuntu20.04.sif
+# singularity pull docker://nvidia/cuda:11.7.1-devel-ubuntu20.04
 
 %environment
   PATH=$PATH:/software/miniconda3/bin
